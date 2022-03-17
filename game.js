@@ -87,8 +87,17 @@ function createCards() {
 
 function gameOver() {
   clearInterval(intervalId)
+  var initials = prompt('Game over! Initials pls')
+  const champ = JSON.parse(localStorage.getItem('memoryGameChamp'))
+  if (!champ || champ.score < score) {
+    localStorage.setItem('memoryGameChamp', JSON.stringify({
+      initials,
+      score
+    }))
+  }
+
   // TODO save score
-  var playAgain = confirm('Game over. Want to play again?')
+  var playAgain = confirm('Want to play again?')
   if (playAgain) {
     window.location.reload()
   }
