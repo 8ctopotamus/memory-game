@@ -18,7 +18,6 @@
 
   <script>
     const champ = JSON.parse(localStorage.getItem('memoryGameChamp'))
-    console.log(champ)
     if (champ) {
       document.getElementById('initials').innerText = champ.initials
       document.getElementById('score').innerText = champ.score
