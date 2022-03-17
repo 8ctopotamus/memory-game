@@ -54,3 +54,8 @@ nav {
 .tile.flipped {
   background: white;
 }
+
+.tile.matched {
+  background: var(--teal);
+  color: white;
+}

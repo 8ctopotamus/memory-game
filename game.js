@@ -15,6 +15,21 @@ var flippedTile2 = null
 function updateScore() {
   score++
   scoreEl.innerText = score
+  flippedTile1.classList.add('matched')
+  flippedTile2.classList.add('matched')
+  flippedTile1 = null
+  flippedTile2 = null
+}
+
+function unflipTiles() {
+  setTimeout(() => {
+    flippedTile1.innerText = brainEmoji
+    flippedTile2.innerText = brainEmoji
+    flippedTile1.classList.remove('flipped')
+    flippedTile2.classList.remove('flipped')
+    flippedTile1 = null
+    flippedTile2 = null
+  }, 2000)
 }
 
 function compareTiles() {
@@ -22,17 +37,16 @@ function compareTiles() {
   var num2 = parseInt(flippedTile2.getAttribute('data-number'))
   console.log('Comparing', num1, num2)
   if (num1 === num2) {
-    // increase score
     updateScore()
   } else {
-    console.log('Not the same, unflip tiles')
+    unflipTiles()
   }
-  // reset 
-  flippedTile1 = null
-  flippedTile2 = null
 }
 
 function handleTileClick(e) {
+  if (flippedTile1 && flippedTile2)
+    return
+
   var tile = e.target
   var num = tile.getAttribute('data-number')
   tile.classList.add('flipped')
@@ -71,14 +85,22 @@ function createCards() {
   }  
 }
 
+function gameOver() {
+  clearInterval(intervalId)
+  // TODO save score
+  var playAgain = confirm('Game over. Want to play again?')
+  if (playAgain) {
+    window.location.reload()
+  }
+}
+
 function startTimer() {
   clearInterval(intervalId)
   intervalId = setInterval(function() {
     time--
     countdownEl.innerText = time
     if (time === 0) {
-      alert('Game over')
-      clearInterval(intervalId)
+      gameOver()
     }
   }, 1000)
 }
