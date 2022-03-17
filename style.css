@@ -32,3 +32,25 @@ nav {
   padding: 15px 30px;
   font-size: 3rem;
 }
+
+#tiles {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.tile {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--blue);
+  cursor: pointer;
+  font-size: 3rem;
+  margin: 1%;
+  height: 150px;
+  width: 18%;
+}
+
+.tile.flipped {
+  background: white;
+}
