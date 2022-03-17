@@ -1,10 +1,48 @@
 var brainEmoji = '🧠'
 var numTiles = 20
+var startTime = 30
+var score = 0
+var time = startTime
+var intervalId
 
 var tiles = document.getElementById('tiles')
+var countdownEl = document.getElementById('countdown')
+var scoreEl = document.getElementById('score')
+
+var flippedTile1 = null
+var flippedTile2 = null
+
+function updateScore() {
+  score++
+  scoreEl.innerText = score
+}
+
+function compareTiles() {
+  var num1 = parseInt(flippedTile1.getAttribute('data-number'))
+  var num2 = parseInt(flippedTile2.getAttribute('data-number'))
+  console.log('Comparing', num1, num2)
+  if (num1 === num2) {
+    // increase score
+    updateScore()
+  } else {
+    console.log('Not the same, unflip tiles')
+  }
+  // reset 
+  flippedTile1 = null
+  flippedTile2 = null
+}
 
 function handleTileClick(e) {
-  console.log('Tile clicked...')
+  var tile = e.target
+  var num = tile.getAttribute('data-number')
+  tile.classList.add('flipped')
+  tile.innerText = num  
+  if (!flippedTile1) {
+    flippedTile1 = tile
+  } else {
+    flippedTile2 = tile
+    compareTiles(flippedTile1, flippedTile2)
+  }
 }
 
 function createShuffledNums() {
@@ -33,8 +71,21 @@ function createCards() {
   }  
 }
 
+function startTimer() {
+  clearInterval(intervalId)
+  intervalId = setInterval(function() {
+    time--
+    countdownEl.innerText = time
+    if (time === 0) {
+      alert('Game over')
+      clearInterval(intervalId)
+    }
+  }, 1000)
+}
+
 function startRound() {
   createCards()
+  startTimer()
 }
 
 startRound()
