@@ -1,7 +1,7 @@
 // global vars
 var brainEmoji = '🧠'
 var numTiles = 20
-var startTime = 5
+var startTime = 30
 var time = startTime
 var score = 0
 var intervalId
