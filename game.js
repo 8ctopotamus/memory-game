@@ -1,10 +1,10 @@
 // global vars
 var brainEmoji = '🧠'
 var numTiles = 20
-var startTime = 30
+var startTime = 5
 var time = startTime
-var intervalId
 var score = 0
+var intervalId
 
 var countdownEl = document.getElementById('countdown')
 var scoreEl = document.getElementById('score')
@@ -14,7 +14,6 @@ var flippedTile1 = null
 var flippedTile2 = null
 
 // functions
-
 function updateScore() {
   // make background green
   flippedTile1.classList.add('matched')
@@ -94,8 +93,25 @@ function createTiles() {
   }
 }
 
+function gameOver() {
+  clearInterval(intervalId)
+  var initials = prompt('What are you initials?')
+  var data = { initials: initials, score: score }
+  localStorage.setItem('memoryGameChamp', JSON.stringify(data))
+  var playAgain = confirm('Want to play again?')
+  if (playAgain) {
+    window.location.reload()
+  }
+}
+
 function startTimer() {
-  console.log('Starting timer...')
+  intervalId = setInterval(function() {
+    time--
+    countdownEl.innerText = time
+    if (time === 0) {
+      gameOver()
+    }
+  }, 1000)
 }
 
 function startRound() {
